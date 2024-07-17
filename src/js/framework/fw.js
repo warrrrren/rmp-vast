@@ -100,24 +100,45 @@ export default class FW {
   }
 
   static ajax(url, timeout, withCredentials) {
+    // return new Promise((resolve, reject) => {
+    //   const xhr = new XMLHttpRequest();
+    //   xhr.open('GET', url, true);
+    //   xhr.timeout = timeout;
+    //   if (withCredentials) {
+    //     xhr.withCredentials = true;
+    //   }
+    //   xhr.onloadend = () => {
+    //     if (typeof xhr.status === 'number' && xhr.status >= 200 && xhr.status < 300) {
+    //       resolve('XMLHttpRequest request succeeded');
+    //     } else {
+    //       reject('XMLHttpRequest wrong status code: ' + xhr.status);
+    //     }
+    //   };
+    //   xhr.ontimeout = () => {
+    //     reject('XMLHttpRequest timeout');
+    //   };
+    //   xhr.send(null);
+    // });
+    
+    //New Method With Image
     return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.open('GET', url, true);
-      xhr.timeout = timeout;
-      if (withCredentials) {
-        xhr.withCredentials = true;
-      }
-      xhr.onloadend = () => {
-        if (typeof xhr.status === 'number' && xhr.status >= 200 && xhr.status < 300) {
-          resolve('XMLHttpRequest request succeeded');
-        } else {
-          reject('XMLHttpRequest wrong status code: ' + xhr.status);
-        }
-      };
-      xhr.ontimeout = () => {
-        reject('XMLHttpRequest timeout');
-      };
-      xhr.send(null);
+
+        // Create the image
+        const imgElement = new Image();
+      
+        // When the image is loaded, resolve the promise
+        imgElement.addEventListener('load', function imgOnLoad() {
+            resolve('IMGRequest request succeeded');
+        });
+
+        // When there's an error during load, reject the promise
+        imgElement.addEventListener('error', function imgOnError() {
+            reject('IMGRequest timeout');
+        })
+
+        // Assign URL
+        imgElement.src = url;
+
     });
   }
 
